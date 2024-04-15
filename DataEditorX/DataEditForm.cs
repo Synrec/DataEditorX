@@ -1766,8 +1766,32 @@ namespace DataEditorX
 		{
 			text2LinkMarks(tb_link.Text);
 		}
-		
-		void Tb_linkKeyPress(object sender, KeyPressEventArgs e)
+
+        private void exportAllToJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dlg = new SaveFileDialog())
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    DataBase.exportJSON(dlg.FileName, GetCardList(false));
+                    MyMsg.Show("OK");
+                }
+            }
+        }
+
+        private void exportSelectToJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dlg = new SaveFileDialog())
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    DataBase.exportJSON(dlg.FileName, GetCardList(true));
+                    MyMsg.Show("OK");
+                }
+            }
+        }
+
+        void Tb_linkKeyPress(object sender, KeyPressEventArgs e)
 		{
 			if(e.KeyChar != '0' && e.KeyChar != '1' && e.KeyChar != 1 && e.KeyChar!=22 && e.KeyChar!=3 && e.KeyChar != 8){
 //				MessageBox.Show("key="+(int)e.KeyChar);

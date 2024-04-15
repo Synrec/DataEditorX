@@ -435,15 +435,67 @@ namespace DataEditorX.Core
 			st = null;
 			return sql;
 		}
-		#endregion
+        #endregion
+        public static string GetInsertJSON(Card c, bool ignore, bool hex = false)
+        {
+            StringBuilder st = new StringBuilder();
+            if (ignore)
+                st.Append("INSERT or ignore into datas values(");
+            else
+                st.Append("INSERT or replace into datas values(");
+            st.Append(c.id.ToString()); st.Append(",");
+            st.Append(c.ot.ToString()); st.Append(",");
+            st.Append(c.alias.ToString()); st.Append(",");
+            if (hex)
+            {
+                st.Append("0x" + c.setcode.ToString("x")); st.Append(",");
+                st.Append("0x" + c.type.ToString("x")); st.Append(",");
+            }
+            else
+            {
+                st.Append(c.setcode.ToString()); st.Append(",");
+                st.Append(c.type.ToString()); st.Append(",");
+            }
+            st.Append(c.atk.ToString()); ; st.Append(",");
+            st.Append(c.def.ToString()); st.Append(",");
+            if (hex)
+            {
+                st.Append("0x" + c.level.ToString("x")); st.Append(",");
+                st.Append("0x" + c.race.ToString("x")); st.Append(",");
+                st.Append("0x" + c.attribute.ToString("x")); st.Append(",");
+                st.Append("0x" + c.category.ToString("x")); st.Append(")");
+            }
+            else
+            {
+                st.Append(c.level.ToString()); st.Append(",");
+                st.Append(c.race.ToString()); st.Append(",");
+                st.Append(c.attribute.ToString()); st.Append(",");
+                st.Append(c.category.ToString()); st.Append(")");
+            }
+            if (ignore)
+                st.Append(";\nINSERT or ignore into texts values(");
+            else
+                st.Append(";\nINSERT or replace into texts values(");
+            st.Append(c.id.ToString()); st.Append(",'");
+            st.Append(c.name.Replace("'", "''")); st.Append("','");
+            st.Append(c.desc.Replace("'", "''"));
+            for (int i = 0; i < 0x10; i++)
+            {
+                st.Append("','"); st.Append(c.Str[i].Replace("'", "''"));
+            }
+            st.Append("');");
+            string sql = st.ToString();
+            st = null;
+            return sql;
+        }
 
-		#region 更新
-		/// <summary>
-		/// 转换为更新语句
-		/// </summary>
-		/// <param name="c">卡片数据</param>
-		/// <returns>SQL语句</returns>
-		public static string GetUpdateSQL(Card c)
+        #region 更新
+        /// <summary>
+        /// 转换为更新语句
+        /// </summary>
+        /// <param name="c">卡片数据</param>
+        /// <returns>SQL语句</returns>
+        public static string GetUpdateSQL(Card c)
 		{
 			StringBuilder st = new StringBuilder();
 			st.Append("update datas set ot="); st.Append(c.ot.ToString());
@@ -501,9 +553,21 @@ namespace DataEditorX.Core
 				}
 				sw.Close();
 			}
-		}
-		
-		public static CardPack findPack(string db, long id){
+        }
+        public static void exportJSON(String file, params Card[] cards)
+        {
+            using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write))
+            {
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                foreach (Card c in cards)
+                {
+                    sw.WriteLine(GetInsertJSON(c, false, true));
+                }
+                sw.Close();
+            }
+        }
+
+        public static CardPack findPack(string db, long id){
 			CardPack cardpack=null;
 			if ( File.Exists(db) && id>=0)
 			{
