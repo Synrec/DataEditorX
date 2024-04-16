@@ -439,51 +439,46 @@ namespace DataEditorX.Core
         public static string GetInsertJSON(Card c, bool ignore, bool hex = false)
         {
             StringBuilder st = new StringBuilder();
-            if (ignore)
-                st.Append("INSERT or ignore into datas values(");
-            else
-                st.Append("INSERT or replace into datas values(");
-            st.Append(c.id.ToString()); st.Append(",");
-            st.Append(c.ot.ToString()); st.Append(",");
-            st.Append(c.alias.ToString()); st.Append(",");
+			st.Append('"');
+            st.Append(c.id.ToString()+ ":{\n");
+            st.Append("id:" + c.id.ToString()); st.Append(",\n");
+            st.Append("ot:" + c.ot.ToString()); st.Append(",\n");
+            st.Append("alias:" + c.alias.ToString()); st.Append(",\n");
             if (hex)
             {
-                st.Append("0x" + c.setcode.ToString("x")); st.Append(",");
-                st.Append("0x" + c.type.ToString("x")); st.Append(",");
+                st.Append("code:" + "0x" + c.setcode.ToString("x")); st.Append(",\n");
+                st.Append("type:" + "0x" + c.type.ToString("x")); st.Append(",\n");
             }
             else
             {
-                st.Append(c.setcode.ToString()); st.Append(",");
-                st.Append(c.type.ToString()); st.Append(",");
+                st.Append("code:" + c.setcode.ToString()); st.Append(",\n");
+                st.Append("type:" + c.type.ToString()); st.Append(",\n");
             }
-            st.Append(c.atk.ToString()); ; st.Append(",");
-            st.Append(c.def.ToString()); st.Append(",");
+            st.Append("atk:" + c.atk.ToString()); ; st.Append(",\n");
+            st.Append("def:" + c.def.ToString()); st.Append(",\n");
             if (hex)
             {
-                st.Append("0x" + c.level.ToString("x")); st.Append(",");
-                st.Append("0x" + c.race.ToString("x")); st.Append(",");
-                st.Append("0x" + c.attribute.ToString("x")); st.Append(",");
-                st.Append("0x" + c.category.ToString("x")); st.Append(")");
+                st.Append("level:" + "0x" + c.level.ToString("x")); st.Append(",\n");
+                st.Append("race:" + "0x" + c.race.ToString("x")); st.Append(",\n");
+                st.Append("attribute" + "0x" + c.attribute.ToString("x")); st.Append(",\n");
+                st.Append("category:" + "0x" + c.category.ToString("x")); st.Append(",\n");
             }
             else
             {
-                st.Append(c.level.ToString()); st.Append(",");
-                st.Append(c.race.ToString()); st.Append(",");
-                st.Append(c.attribute.ToString()); st.Append(",");
-                st.Append(c.category.ToString()); st.Append(")");
+                st.Append("level:" + c.level.ToString()); st.Append(",\n");
+                st.Append("race:" + c.race.ToString()); st.Append(",\n");
+                st.Append("attribute" + c.attribute.ToString()); st.Append(",\n");
+                st.Append("category:" + c.category.ToString()); st.Append(",\n");
             }
-            if (ignore)
-                st.Append(";\nINSERT or ignore into texts values(");
-            else
-                st.Append(";\nINSERT or replace into texts values(");
-            st.Append(c.id.ToString()); st.Append(",'");
-            st.Append(c.name.Replace("'", "''")); st.Append("','");
-            st.Append(c.desc.Replace("'", "''"));
+            st.Append("name:" + c.name.Replace("'", "''")); st.Append("','\n");
+            st.Append("desc:" + c.desc.Replace("'", "''"));
             for (int i = 0; i < 0x10; i++)
             {
-                st.Append("','"); st.Append(c.Str[i].Replace("'", "''"));
+                st.Append('\n');
+                st.Append("','"); st.Append("text" + i + ":" + c.Str[i].Replace("'", "''"));
             }
-            st.Append("');");
+            st.Append("\n}");
+            st.Append('"');
             string sql = st.ToString();
             st = null;
             return sql;

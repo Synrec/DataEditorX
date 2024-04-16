@@ -1769,14 +1769,6 @@ namespace DataEditorX
 
         private void exportAllToJSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new SaveFileDialog())
-            {
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    DataBase.exportJSON(dlg.FileName, GetCardList(false));
-                    MyMsg.Show("OK");
-                }
-            }
         }
 
         private void exportSelectToJSONToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1786,6 +1778,18 @@ namespace DataEditorX
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     DataBase.exportJSON(dlg.FileName, GetCardList(true));
+                    MyMsg.Show("OK");
+                }
+            }
+        }
+
+        private void exportAllToJSONToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dlg = new SaveFileDialog())
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    DataBase.exportJSON(dlg.FileName, GetCardList(false));
                     MyMsg.Show("OK");
                 }
             }

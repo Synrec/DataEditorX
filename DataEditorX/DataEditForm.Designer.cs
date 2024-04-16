@@ -153,7 +153,7 @@ namespace DataEditorX
             this.menuitem_help});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(864, 28);
+            this.mainMenu.Size = new System.Drawing.Size(864, 30);
             this.mainMenu.TabIndex = 0;
             this.mainMenu.Text = "mainMenu";
             // 
@@ -170,7 +170,7 @@ namespace DataEditorX
             this.toolStripSeparator2,
             this.menuitem_quit});
             this.menuitem_file.Name = "menuitem_file";
-            this.menuitem_file.Size = new System.Drawing.Size(63, 24);
+            this.menuitem_file.Size = new System.Drawing.Size(63, 26);
             this.menuitem_file.Text = "File(&F)";
             // 
             // menuitem_open
@@ -239,7 +239,7 @@ namespace DataEditorX
             this.tsep7,
             this.menuitem_importmseimg});
             this.menu_image.Name = "menu_image";
-            this.menu_image.Size = new System.Drawing.Size(79, 24);
+            this.menu_image.Size = new System.Drawing.Size(79, 26);
             this.menu_image.Text = "Image(&I)";
             // 
             // menuitem_mseconfig
@@ -323,7 +323,7 @@ namespace DataEditorX
             this.menuitem_cancelTask,
             this.menuitem_autoreturn});
             this.menu_data.Name = "menu_data";
-            this.menu_data.Size = new System.Drawing.Size(73, 24);
+            this.menu_data.Size = new System.Drawing.Size(73, 26);
             this.menu_data.Text = "Data(&T)";
             // 
             // menuitem_operacardsfile
@@ -397,6 +397,7 @@ namespace DataEditorX
             this.exportAllToJSONToolStripMenuItem.Name = "exportAllToJSONToolStripMenuItem";
             this.exportAllToJSONToolStripMenuItem.Size = new System.Drawing.Size(245, 26);
             this.exportAllToJSONToolStripMenuItem.Text = "Export all to JSON";
+            this.exportAllToJSONToolStripMenuItem.Click += new System.EventHandler(this.exportAllToJSONToolStripMenuItem_Click_1);
             // 
             // menuitem_findluafunc
             // 
@@ -459,7 +460,7 @@ namespace DataEditorX
             this.menuitem_autocheckupdate,
             this.menuitem_github});
             this.menuitem_help.Name = "menuitem_help";
-            this.menuitem_help.Size = new System.Drawing.Size(76, 24);
+            this.menuitem_help.Size = new System.Drawing.Size(76, 26);
             this.menuitem_help.Text = "Help(&H)";
             // 
             // menuitem_about
@@ -627,14 +628,14 @@ namespace DataEditorX
             this.tb_cardtext.Multiline = true;
             this.tb_cardtext.Name = "tb_cardtext";
             this.tb_cardtext.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_cardtext.Size = new System.Drawing.Size(326, 202);
+            this.tb_cardtext.Size = new System.Drawing.Size(326, 200);
             this.tb_cardtext.TabIndex = 4;
             // 
             // tb_edittext
             // 
             this.tb_edittext.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.tb_edittext.HideSelection = false;
-            this.tb_edittext.Location = new System.Drawing.Point(552, 508);
+            this.tb_edittext.Location = new System.Drawing.Point(552, 506);
             this.tb_edittext.MaxLength = 2000;
             this.tb_edittext.Multiline = true;
             this.tb_edittext.Name = "tb_edittext";
@@ -1119,9 +1120,9 @@ namespace DataEditorX
             this.pl_main.Controls.Add(this.cb_setname4);
             this.pl_main.Controls.Add(this.cb_cardrule);
             this.pl_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pl_main.Location = new System.Drawing.Point(0, 28);
+            this.pl_main.Location = new System.Drawing.Point(0, 30);
             this.pl_main.Name = "pl_main";
-            this.pl_main.Size = new System.Drawing.Size(864, 555);
+            this.pl_main.Size = new System.Drawing.Size(864, 553);
             this.pl_main.TabIndex = 0;
             // 
             // lv_cardlist
@@ -1139,7 +1140,7 @@ namespace DataEditorX
             this.lv_cardlist.Name = "lv_cardlist";
             this.lv_cardlist.Scrollable = false;
             this.lv_cardlist.ShowItemToolTips = true;
-            this.lv_cardlist.Size = new System.Drawing.Size(216, 549);
+            this.lv_cardlist.Size = new System.Drawing.Size(216, 547);
             this.lv_cardlist.TabIndex = 1;
             this.lv_cardlist.UseCompatibleStateImageBehavior = false;
             this.lv_cardlist.View = System.Windows.Forms.View.Details;
@@ -1180,7 +1181,7 @@ namespace DataEditorX
             this.lb_scripttext.Location = new System.Drawing.Point(554, 371);
             this.lb_scripttext.Name = "lb_scripttext";
             this.lb_scripttext.ScrollAlwaysVisible = true;
-            this.lb_scripttext.Size = new System.Drawing.Size(310, 133);
+            this.lb_scripttext.Size = new System.Drawing.Size(310, 131);
             this.lb_scripttext.TabIndex = 6;
             this.lb_scripttext.SelectedIndexChanged += new System.EventHandler(this.Lb_scripttextSelectedIndexChanged);
             // 
