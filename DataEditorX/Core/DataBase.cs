@@ -439,46 +439,48 @@ namespace DataEditorX.Core
         public static string GetInsertJSON(Card c, bool ignore, bool hex = false)
         {
             StringBuilder st = new StringBuilder();
-			st.Append('"');
-            st.Append(c.id.ToString()+ ":{\n");
-            st.Append("id:" + c.id.ToString()); st.Append(",\n");
-            st.Append("ot:" + c.ot.ToString()); st.Append(",\n");
-            st.Append("alias:" + c.alias.ToString()); st.Append(",\n");
+            st.Append("\"" + c.id.ToString() + "\"" + ":{\n");
+            st.Append("\"id\":" + "\"" + c.id.ToString() + "\""); st.Append(",\n");
+            st.Append("\"ot\":" + "\"" + c.ot.ToString() + "\""); st.Append(",\n");
+            st.Append("\"alias\":" + "\"" + c.alias.ToString() + "\""); st.Append(",\n");
             if (hex)
             {
-                st.Append("code:" + "0x" + c.setcode.ToString("x")); st.Append(",\n");
-                st.Append("type:" + "0x" + c.type.ToString("x")); st.Append(",\n");
+                st.Append("\"code\":" + "\"" + "0x" + c.setcode.ToString("x") + "\""); st.Append(",\n");
+                st.Append("\"type\":" + "\"" + "0x" + c.type.ToString("x") + "\""); st.Append(",\n");
             }
             else
             {
-                st.Append("code:" + c.setcode.ToString()); st.Append(",\n");
-                st.Append("type:" + c.type.ToString()); st.Append(",\n");
+                st.Append("\"code\":" + "\"" + c.setcode.ToString() + "\""); st.Append(",\n");
+                st.Append("\"type\":" + "\"" + c.type.ToString() + "\""); st.Append(",\n");
             }
-            st.Append("atk:" + c.atk.ToString()); ; st.Append(",\n");
-            st.Append("def:" + c.def.ToString()); st.Append(",\n");
+            st.Append("\"atk\":" + "\"" + c.atk.ToString() + "\""); ; st.Append(",\n");
+            st.Append("\"def\":" + "\"" + c.def.ToString() + "\""); st.Append(",\n");
             if (hex)
             {
-                st.Append("level:" + "0x" + c.level.ToString("x")); st.Append(",\n");
-                st.Append("race:" + "0x" + c.race.ToString("x")); st.Append(",\n");
-                st.Append("attribute" + "0x" + c.attribute.ToString("x")); st.Append(",\n");
-                st.Append("category:" + "0x" + c.category.ToString("x")); st.Append(",\n");
+                st.Append("\"level\":" + "\"" + "0x" + c.level.ToString("x") + "\""); st.Append(",\n");
+                st.Append("\"race\":" + "\"" + "0x" + c.race.ToString("x") + "\""); st.Append(",\n");
+                st.Append("\"attribute\":" + "\"" + "0x" + c.attribute.ToString("x") + "\""); st.Append(",\n");
+                st.Append("\"category\":" + "\"" + "0x" + c.category.ToString("x") + "\""); st.Append(",\n");
             }
             else
             {
-                st.Append("level:" + c.level.ToString()); st.Append(",\n");
-                st.Append("race:" + c.race.ToString()); st.Append(",\n");
-                st.Append("attribute" + c.attribute.ToString()); st.Append(",\n");
-                st.Append("category:" + c.category.ToString()); st.Append(",\n");
+                st.Append("\"level\":" + "\"" + c.level.ToString() + "\""); st.Append(",\n");
+                st.Append("\"race\":" + "\"" + c.race.ToString() + "\""); st.Append(",\n");
+                st.Append("\"attribute\":" + "\"" + c.attribute.ToString() + "\""); st.Append(",\n");
+                st.Append("\"category\":" + "\"" + c.category.ToString() + "\""); st.Append(",\n");
             }
-            st.Append("name:" + c.name.Replace("'", "''")); st.Append("','\n");
-            st.Append("desc:" + c.desc.Replace("'", "''"));
+            st.Append("\"name\":" + "\"" + c.name.Replace("'", "''") + "\""); st.Append(",\n");
+            st.Append("\"desc\":" + "\"" + c.desc.Replace("'", "''") + "\""); st.Append(",");
             for (int i = 0; i < 0x10; i++)
             {
                 st.Append('\n');
-                st.Append("','"); st.Append("text" + i + ":" + c.Str[i].Replace("'", "''"));
+                st.Append("\"String" + i + "\"" + ":"); st.Append("\"" + c.Str[i].Replace("'", "''") + "\"");
+				if(i < 0x10 - 1)
+				{
+					st.Append(",");
+				}
             }
             st.Append("\n}");
-            st.Append('"');
             string sql = st.ToString();
             st = null;
             return sql;
@@ -554,10 +556,21 @@ namespace DataEditorX.Core
             using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write))
             {
                 StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+				int cnt = 0;
+				sw.WriteLine("{");
                 foreach (Card c in cards)
                 {
-                    sw.WriteLine(GetInsertJSON(c, false, true));
+                    cnt++;
+					if(cnt < cards.Length)
+                    {
+                        sw.WriteLine(GetInsertJSON(c, false, true) + ",");
+					}
+					else
+					{
+                        sw.WriteLine(GetInsertJSON(c, false, true));
+                    }
                 }
+                sw.WriteLine("}\n");
                 sw.Close();
             }
         }
